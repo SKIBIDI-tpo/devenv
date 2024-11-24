@@ -184,15 +184,15 @@ class MakeCommandTest extends TestCase
             '--example' => true,
         ]);
 
-        $this->assertFileExists(self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml.example');
+        $this->assertFileExists(self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml');
     }
 
     /** @test */
     public function an_existing_example_homestead_yaml_settings_is_not_overwritten()
     {
         file_put_contents(
-            self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml.example',
-            'name: Already existing Homestead.yaml.example'
+            self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml',
+            'name: Already existing Homestead.yaml'
         );
         $tester = new CommandTester(new MakeCommand());
 
@@ -200,11 +200,11 @@ class MakeCommandTest extends TestCase
             '--example' => true,
         ]);
 
-        $this->assertFileExists(self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml.example');
+        $this->assertFileExists(self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml');
 
         $this->assertStringEqualsFile(
-            self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml.example',
-            'name: Already existing Homestead.yaml.example'
+            self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml',
+            'name: Already existing Homestead.yaml'
         );
     }
 
@@ -303,8 +303,8 @@ class MakeCommandTest extends TestCase
     public function a_homestead_yaml_settings_is_created_from_a_homestead_yaml_example_if_it_exists()
     {
         file_put_contents(
-            self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml.example',
-            "message: 'Already existing Homestead.yaml.example'"
+            self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml',
+            "message: 'Already existing Homestead.yaml'"
         );
         $tester = new CommandTester(new MakeCommand());
 
@@ -313,7 +313,7 @@ class MakeCommandTest extends TestCase
         $this->assertFileExists(self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml');
 
         $this->assertStringContainsString(
-            "message: 'Already existing Homestead.yaml.example'",
+            "message: 'Already existing Homestead.yaml'",
             file_get_contents(self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml')
         );
     }
@@ -323,7 +323,7 @@ class MakeCommandTest extends TestCase
     {
         copy(
             __DIR__.'/../resources/Homestead.yaml',
-            self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml.example'
+            self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml'
         );
 
         $tester = new CommandTester(new MakeCommand());
